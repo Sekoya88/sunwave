@@ -3,7 +3,7 @@ services:
     name: sunwave
     runtime: python
     buildCommand: chmod +x build.sh && ./build.sh
-    startCommand: gunicorn wsgi:app
+    startCommand: gunicorn -c gunicorn_config.py wsgi:app
     plan: free
     envVars:
       - key: PRODUCTION
