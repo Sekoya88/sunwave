@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SunWave - Optimisation des Centrales Solaires</title>
+    <link rel="stylesheet" href="/static/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script defer src="/static/script.js"></script>
+    <meta name="description" content="SunWave - Optimisez votre production d'énergie solaire avec notre système d'arrosage intelligent pour les centrales solaires en milieu désertique.">
+    <style>
+        .result-card.performance {
+            border-top: 4px solid #E74C3C; /* Rouge */
+        }
+
+        .result-card.water {
+            border-top: 4px solid #3498DB; /* Bleu */
+        }
+
+        .result-card.environmental {
+            border-top: 4px solid #2ECC71; /* Vert */
+        }
+
+        .result-card.performance .result-value,
+        .result-card.performance .result-economy {
+            color: #E74C3C; /* Rouge */
+        }
+
+        .result-card.water .result-value,
+        .result-card.water .result-economy {
+            color: #3498DB; /* Bleu */
+        }
+
+        .result-card.environmental .result-value,
+        .result-card.environmental .result-economy {
+            color: #2ECC71; /* Vert */
+        }
+    </style>
+</head>
+<body>
+    <div class="scroll-container">
+        <div class="efficiency-indicator">
+            <span class="icon">⚡</span>
+            <span>Efficacité: <span class="efficiency-value">+0%</span></span>
+        </div>
+        
+        <header>
+            <div class="logo">
+                <img src="/static/images/SunWave.png" alt="SunWave" loading="eager">
+                <span><h3>SunWave</h3></span>
+            </div>
+
+            <nav>
+                <a href="/">Accueil</a>
+                <a href="/configurateur">Configurateur</a>
+                <a href="/projet-equipe">Projet & Équipe</a>
+                <button class="mobile-menu-btn" aria-label="Menu">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </nav>
+        </header>
+
+        <div class="mobile-nav">
+            <a href="/">Accueil</a>
+            <a href="/configurateur">Configurateur</a>
+            <a href="/projet-equipe">Projet & Équipe</a>
+        </div>
+
+        <section class="hero-section cloud-section" id="section1">
+            <div class="hero-content">
+                <h1>Optimisation des Centrales Solaires en Milieu Désertique</h1>
+                <p class="hero-subtitle">Augmentez votre production d'énergie jusqu'à 15% grâce à notre système d'arrosage intelligent</p>
+                <a href="/configurateur" class="cta-button">Configurer votre installation</a>
+            </div>
+            <div class="hero-animation">
+                <div class="sun"></div>
+                <div class="panel-container">
+                    <div class="panel"></div>
+                    <div class="panel"></div>
+                    <div class="panel"></div>
+                </div>
+                <div class="water-drops">
+                    <div class="water-drop"></div>
+                    <div class="water-drop"></div>
+                    <div class="water-drop"></div>
+                </div>
+            </div>
+            <div class="scroll-indicator">
+                <span>Découvrir</span>
+                <i class="fas fa-chevron-down"></i>
+            </div>
+        </section>
+
+        <section class="features-section cloud-section" id="section2">
+            <h2>Pourquoi choisir SunWave?</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">💧</div>
+                    <h3>Économie d'eau</h3>
+                    <p>Notre système recycle jusqu'à 85% de l'eau utilisée pour le nettoyage des panneaux.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3>Production optimisée</h3>
+                    <p>Augmentez votre production d'énergie de 15% grâce à des panneaux propres et refroidis.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🌱</div>
+                    <h3>Impact environnemental</h3>
+                    <p>Réduisez votre empreinte carbone et contribuez à un avenir plus durable.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">💰</div>
+                    <h3>Retour sur investissement</h3>
+                    <p>Rentabilisez votre installation en moins de 3 ans grâce aux économies réalisées.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="calculator-section cloud-section" id="section3">
+            <h2>Calculez vos économies</h2>
+            <div class="calculator-container">
+                <div class="input-section">
+                    <h3>Configuration de l'Installation</h3>
+                    <form id="calculatorForm">
+                        <div class="form-group" data-unit="panneaux">
+                            <label for="nb_panneaux">Nombre de panneaux solaires</label>
+                            <input 
+                                type="number" 
+                                id="nb_panneaux"
+                                name="nb_panneaux" 
+                                value="250" 
+                                min="1"
+                                max="100000"
+                                title="Entrez le nombre total de panneaux solaires de votre installation"
+                                placeholder="Ex: 250 panneaux"
+                                required
+                            >
+                            <span class="input-help">Entre 1 et 100 000 panneaux</span>
+                        </div>
+                        <div class="form-group" data-unit="kWc">
+                            <label for="puissance">Puissance de l'installation</label>
+                            <input 
+                                type="number" 
+                                id="puissance"
+                                name="puissance" 
+                                value="100" 
+                                min="0.1"
+                                max="50000"
+                                step="0.1"
+                                title="Entrez la puissance totale en kilowatt-crête (kWc)"
+                                placeholder="Ex: 100 kWc"
+                                required
+                            >
+                            <span class="input-help">Entre 0.1 et 50 000 kWc</span>
+                        </div>
+                        <div class="form-group" data-unit="°C">
+                            <label for="temperature">Température moyenne</label>
+                            <input 
+                                type="number" 
+                                id="temperature"
+                                name="temperature" 
+                                value="45" 
+                                min="-20"
+                                max="80"
+                                title="Entrez la température moyenne du site en degrés Celsius"
+                                placeholder="Ex: 45°C"
+                                required
+                            >
+                            <span class="input-help">Entre -20°C et 80°C</span>
+                        </div>
+                        <div class="form-group" data-unit="jours">
+                            <label for="jours">Fréquence de nettoyage</label>
+                            <input 
+                                type="number" 
+                                id="jours"
+                                name="jours" 
+                                value="7" 
+                                min="1"
+                                max="365"
+                                title="Entrez le nombre de jours entre chaque nettoyage"
+                                placeholder="Ex: 7 jours"
+                                required
+                            >
+                            <span class="input-help">Entre 1 et 365 jours</span>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="results-section">
+                    <div class="skeleton-loading" id="resultsLoading" style="display: none;">
+                        <div class="skeleton-card"></div>
+                        <div class="skeleton-card"></div>
+                        <div class="skeleton-card"></div>
+                    </div>
+                    
+                    <div class="result-cards" id="resultCards">
+                        <div class="result-card performance">
+                            <h3>🚀 Gain en Performance</h3>
+                            <div class="result-value">+14.1%</div>
+                            <div class="result-detail">14 148 kWh/an supplémentaires</div>
+                            <div class="result-economy">Économie totale: 3197.39 € par an</div>
+                        </div>
+
+                        <div class="result-card water">
+                            <h3>💧 Consommation d'Eau</h3>
+                            <div class="result-value">11 080 L/an</div>
+                            <div class="result-detail">
+                                <ul>
+                                    <li>85% d'eau recyclée</li>
+                                    <li>Économie: 9418 L/an</li>
+                                    <li>Efficacité: 0.5L/m² par nettoyage</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="result-card environmental">
+                            <h3>🌱 Impact Environnemental</h3>
+                            <div class="result-value">-7.5 tonnes CO₂/an</div>
+                            <div class="result-detail">
+                                <ul>
+                                    <li>Équivalent à 300 arbres plantés</li>
+                                    <li>Réduction CO₂: 0.5 kg/kWh</li>
+                                    <li>Durée système: 25 ans</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="precisions-section cloud-section" id="section4">
+            <h2>Précisions sur les Calculs</h2>
+            <div class="precisions-grid">
+                <div class="precision-card performance">
+                    <h3>🚀 Performance</h3>
+                    <ul>
+                        <li>Perte due au sable: -0.5% par jour sans nettoyage</li>
+                        <li>Impact température: -0.4% par °C au-dessus de 25°C</li>
+                        <li>Gain avec nettoyage: +15%</li>
+                        <li>Refroidissement: -5 à -10°C</li>
+                    </ul>
+                </div>
+                <div class="precision-card water">
+                    <h3>💧 Gestion de l'Eau</h3>
+                    <ul>
+                        <li>Consommation: 0.5L/m² par nettoyage</li>
+                        <li>Recyclage: 85% de l'eau</li>
+                        <li>Pertes évaporation: 10-15%</li>
+                    </ul>
+                </div>
+                <div class="precision-card environmental">
+                    <h3>🌱 Impact CO₂</h3>
+                    <ul>
+                        <li>Production optimisée: +15 000 kWh/100kWc/an</li>
+                        <li>Réduction CO₂: 0.5 kg/kWh</li>
+                        <li>Absorption par arbre: 25 kg CO₂/an</li>
+                        <li>Durée système: 25 ans</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section class="cta-section cloud-section" id="section5">
+            <div class="cta-content">
+                <h2>Prêt à optimiser votre installation solaire?</h2>
+                <p>Utilisez notre configurateur pour obtenir un devis personnalisé</p>
+                <div class="cta-buttons">
+                    <a href="/configurateur" class="cta-button">Configurer maintenant</a>
+                    <button id="exportPdfBtn" class="cta-button secondary">
+                        <i class="fas fa-file-pdf"></i> Télécharger le rapport SunWave
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <img src="/static/images/SunWave.png" alt="SunWave" loading="lazy">
+                    <p>SunWave - Solutions d'optimisation solaire</p>
+                </div>
+                <div class="footer-links">
+                    <h3>Liens rapides</h3>
+                    <a href="/">Accueil</a>
+                    <a href="/configurateur">Configurateur</a>
+                    <a href="/projet-equipe">Projet & Équipe</a>
+                </div>
+                <div class="footer-contact">
+                    <h3>Contact</h3>
+                    <p><i class="fas fa-envelope"></i> contact@sunwave.fr</p>
+                    <p><i class="fas fa-phone"></i> +33 7 83 26 53 18</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 SunWave. Tous droits réservés. EDMOND Nicolas</p>
+            </div>
+        </footer>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Défilement fluide
+            const scrollLinks = document.querySelectorAll('.scroll-indicator');
+            scrollLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    const targetSection = document.querySelector(targetId || '#section2');
+                    if (targetSection) {
+                        targetSection.scrollIntoView({ behavior: 'smooth' });
+                    }
+                });
+            });
+            
+            // Animation au défilement
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('animate');
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            document.querySelectorAll('section').forEach(section => {
+                observer.observe(section);
+            });
+            
+            document.querySelectorAll('.feature-card, .result-card, .precision-card').forEach(card => {
+                observer.observe(card);
+            });
+            
+            // Ajout de l'animation de l'indicateur d'efficacité
+            const scrollContainer = document.querySelector('.scroll-container');
+            const efficiencyIndicator = document.querySelector('.efficiency-indicator');
+            
+            if (scrollContainer && efficiencyIndicator) {
+                scrollContainer.addEventListener('scroll', () => {
+                    const scrollProgress = scrollContainer.scrollTop / (scrollContainer.scrollHeight - scrollContainer.clientHeight);
+                    
+                    // Afficher l'indicateur après 10% de scroll
+                    if (scrollProgress > 0.1) {
+                        efficiencyIndicator.classList.add('visible');
+                        
+                        // Mettre à jour la valeur d'efficacité en fonction du scroll
+                        const efficiencyValue = Math.min(Math.round(scrollProgress * 15), 15);
+                        efficiencyIndicator.querySelector('.efficiency-value').textContent = `+${efficiencyValue}%`;
+                        
+                        // Changer la couleur en fonction de l'efficacité
+                        const hue = 120 * (efficiencyValue / 15); // De 0 (rouge) à 120 (vert)
+                        efficiencyIndicator.querySelector('.efficiency-value').style.color = `hsl(${hue}, 70%, 45%)`;
+                    } else {
+                        efficiencyIndicator.classList.remove('visible');
+                    }
+                });
+            }
+            
+            // Function to handle PDF export button click
+            document.getElementById('exportPdfBtn').addEventListener('click', function(e) {
+                e.preventDefault();
+                const form = document.getElementById('calculatorForm');
+                
+                // Get form data
+                const formData = new FormData(form);
+                
+                // Create a modern loading overlay
+                const loadingOverlay = document.createElement('div');
+                loadingOverlay.id = 'pdfLoadingOverlay';
+                loadingOverlay.style.position = 'fixed';
+                loadingOverlay.style.top = '0';
+                loadingOverlay.style.left = '0';
+                loadingOverlay.style.width = '100%';
+                loadingOverlay.style.height = '100%';
+                loadingOverlay.style.backgroundColor = 'rgba(255, 255, 255, 0.95)';
+                loadingOverlay.style.display = 'flex';
+                loadingOverlay.style.flexDirection = 'column';
+                loadingOverlay.style.alignItems = 'center';
+                loadingOverlay.style.justifyContent = 'center';
+                loadingOverlay.style.zIndex = '9999';
+                loadingOverlay.style.backdropFilter = 'blur(5px)';
+                
+                // Create spinner
+                const spinner = document.createElement('div');
+                spinner.className = 'pdf-spinner';
+                spinner.style.width = '80px';
+                spinner.style.height = '80px';
+                spinner.style.border = '5px solid rgba(0, 115, 230, 0.2)';
+                spinner.style.borderRadius = '50%';
+                spinner.style.borderTop = '5px solid #0073e6';
+                spinner.style.animation = 'pdf-spin 1s linear infinite';
+                
+                // Create loading text
+                const loadingText = document.createElement('div');
+                loadingText.style.marginTop = '20px';
+                loadingText.style.fontSize = '18px';
+                loadingText.style.fontWeight = '600';
+                loadingText.style.color = '#0073e6';
+                loadingText.innerHTML = 'Génération du rapport en cours<span class="loading-dots">...</span>';
+                
+                // Append elements to overlay
+                loadingOverlay.appendChild(spinner);
+                loadingOverlay.appendChild(loadingText);
+                
+                // Add animation style
+                const style = document.createElement('style');
+                style.textContent = `
+                    @keyframes pdf-spin {
+                        0% { transform: rotate(0deg); }
+                        100% { transform: rotate(360deg); }
+                    }
+                    
+                    @keyframes pulse {
+                        0%, 100% { opacity: 0.6; }
+                        50% { opacity: 1; }
+                    }
+                    
+                    .loading-dots {
+                        display: inline-block;
+                        animation: pulse 1.5s infinite;
+                        min-width: 24px;
+                        text-align: left;
+                    }
+                `;
+                document.head.appendChild(style);
+                
+                // Add to body
+                document.body.appendChild(loadingOverlay);
+                
+                // Animate loading dots
+                let dotsCount = 0;
+                const dotInterval = setInterval(() => {
+                    dotsCount = (dotsCount + 1) % 4;
+                    const dots = '.'.repeat(dotsCount || 1);
+                    document.querySelector('.loading-dots').textContent = dots;
+                }, 500);
+                
+                // Send request to generate PDF
+                fetch('/export-pdf', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        nb_panneaux: parseFloat(document.getElementById('nb_panneaux').value) || 250,
+                        puissance: parseFloat(document.getElementById('puissance').value) || 100,
+                        temperature: parseFloat(document.getElementById('temperature').value) || 45,
+                        jours: parseInt(document.getElementById('jours').value) || 7
+                    })
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Erreur lors de la génération du PDF');
+                    }
+                    return response.blob();
+                })
+                .then(blob => {
+                    // Stop the dot animation
+                    clearInterval(dotInterval);
+                    
+                    // Create success message
+                    loadingText.style.color = '#28a745';
+                    loadingText.innerHTML = 'Rapport généré avec succès!';
+                    spinner.style.borderTop = '5px solid #28a745';
+                    
+                    // Create and trigger download
+                    const url = window.URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.style.display = 'none';
+                    a.href = url;
+                    a.download = 'rapport_sunwave.pdf';
+                    document.body.appendChild(a);
+                    
+                    // Delay download slightly to show success message
+                    setTimeout(() => {
+                        a.click();
+                        window.URL.revokeObjectURL(url);
+                        
+                        // Remove loading overlay after a short delay
+                        setTimeout(() => {
+                            document.body.removeChild(loadingOverlay);
+                            document.body.removeChild(a);
+                        }, 1500);
+                    }, 800);
+                })
+                .catch(error => {
+                    // Stop the dot animation
+                    clearInterval(dotInterval);
+                    
+                    // Handle error, especially missing wkhtmltopdf
+                    console.error('Error:', error);
+                    loadingText.style.color = '#dc3545';
+                    
+                    if (error.message.includes('wkhtmltopdf')) {
+                        loadingText.innerHTML = 'Erreur: Le module wkhtmltopdf n\'est pas installé sur le serveur.';
+                    } else {
+                        loadingText.innerHTML = 'Erreur lors de la génération du rapport. Veuillez réessayer.';
+                    }
+                    
+                    // Change spinner to error state
+                    spinner.style.borderTop = '5px solid #dc3545';
+                    spinner.style.animation = 'none';
+                    
+                    // Add a close button
+                    const closeBtn = document.createElement('button');
+                    closeBtn.textContent = 'Fermer';
+                    closeBtn.style.marginTop = '20px';
+                    closeBtn.style.padding = '8px 16px';
+                    closeBtn.style.backgroundColor = '#f8f9fa';
+                    closeBtn.style.border = '1px solid #dee2e6';
+                    closeBtn.style.borderRadius = '4px';
+                    closeBtn.style.cursor = 'pointer';
+                    closeBtn.addEventListener('click', () => {
+                        document.body.removeChild(loadingOverlay);
+                    });
+                    
+                    loadingOverlay.appendChild(closeBtn);
+                });
+            });
+
+            // Show loading state when form changes
+            const calculatorForm = document.getElementById('calculatorForm');
+            const resultsLoading = document.getElementById('resultsLoading');
+            const resultCards = document.getElementById('resultCards');
+            
+            if (calculatorForm && resultsLoading && resultCards) {
+                const inputs = calculatorForm.querySelectorAll('input, select');
+                inputs.forEach(input => {
+                    input.addEventListener('input', () => {
+                        // Add visual feedback animation
+                        input.classList.add('input-changed');
+                        setTimeout(() => {
+                            input.classList.remove('input-changed');
+                        }, 1000);
+                    });
+                    
+                    input.addEventListener('change', () => {
+                        // Créer un effet de mise à jour sans cacher les résultats
+                        // Ajouter une classe de mise à jour plutôt que de cacher
+                        resultCards.classList.add('updating');
+                        
+                        // After calculation (simulate delay for demo)
+                        setTimeout(() => {
+                            resultCards.classList.remove('updating');
+                        }, 500);
+                    });
+                });
+            }
+        });
+    </script>
+</body>
+</html>

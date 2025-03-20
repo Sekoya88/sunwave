@@ -1,0 +1,695 @@
+.configurator-container {
+    display: grid;
+    grid-template-columns: 250px 1fr 300px;
+    gap: 2rem;
+    padding: 2rem;
+    margin-top: 80px;
+    height: calc(100vh - 100px);
+    max-height: 1200px;
+    overflow-y: auto;
+}
+
+.config-sidebar {
+    background: rgba(255, 255, 255, 0.90);
+    border-radius: 15px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+    max-height: calc(100vh - 140px);
+    overflow-y: auto;
+}
+
+.config-form .form-group {
+    margin-bottom: 1.5rem;
+}
+
+.config-form label, .system-options label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: var(--dark-color);
+    font-weight: 500;
+}
+
+.config-form input,
+.config-form select,
+.system-options select {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #E0E7EE;
+    border-radius: 8px;
+    font-size: 1rem;
+    background-color: #F9FBFD;
+    transition: all 0.2s ease;
+}
+
+.config-form input:focus,
+.config-form select:focus,
+.system-options select:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px rgba(126, 200, 227, 0.2);
+}
+
+.design-area {
+    position: relative;
+    background: white;
+    border-radius: 15px;
+    padding: 1.5rem;
+    min-height: 500px;
+    max-height: calc(100vh - 140px);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    margin: 1rem;
+    overflow: hidden;
+}
+
+.toolbar {
+    display: flex;
+    gap: 0.5rem;
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+}
+
+.tool-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.7rem 1rem;
+    border: none;
+    border-radius: 5px;
+    background: var(--primary-color);
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+
+.tool-btn i {
+    font-size: 1.1rem;
+}
+
+.drag-area {
+    transform-origin: center;
+    transform: scale(1);
+    transition: transform 0.3s ease;
+    background: rgba(246, 249, 252, 0.95);
+    border: 2px dashed #D1E2F0;
+    border-radius: 15px;
+    height: calc(100% - 120px);
+    min-height: 600px;
+    position: relative;
+    overflow: hidden;
+}
+
+.price-calculator {
+    background: rgba(255, 255, 255, 0.90);
+    border-radius: 15px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+    max-height: calc(100vh - 140px);
+    overflow-y: auto;
+}
+
+.price-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #E0E7EE;
+}
+
+.total-price {
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 2px solid var(--primary-color);
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.generate-quote-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    margin-top: 1.5rem;
+}
+
+.generate-quote-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+}
+
+.generate-quote-btn i {
+    font-size: 1.2rem;
+}
+
+/* Styles pour les éléments dans la zone de design */
+.sprinkler {
+    width: 16px;
+    height: 16px;
+    background: #e74c3c;
+    border: 2px solid #e74c3c;
+    border-radius: 50%;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    cursor: move;
+    z-index: 3;
+    box-shadow: 0 0 0 4px rgba(231, 76, 60, 0.2);
+    transition: all 0.3s ease;
+}
+
+.sprinkler:hover {
+    box-shadow: 0 0 0 6px rgba(231, 76, 60, 0.3);
+    transform: translate(-50%, -50%) scale(1.2);
+}
+
+.sensor {
+    width: 30px;
+    height: 30px;
+    background: linear-gradient(135deg, #f1c40f, #f39c12);
+    border: 2px solid #f39c12;
+    transform: rotate(45deg);
+    position: absolute;
+    cursor: move;
+    z-index: 3;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+    transition: all 0.3s ease;
+}
+
+.sensor:hover {
+    transform: rotate(45deg) scale(1.1);
+    box-shadow: 0 0 15px rgba(249, 213, 110, 0.5);
+}
+
+.pump, .tank {
+    position: absolute;
+    cursor: move;
+    z-index: 3;
+    transition: all 0.3s ease;
+}
+
+.pump {
+    width: 60px;
+    height: 60px;
+    background: #f39c12;
+    border: 2px solid #f39c12;
+    border-radius: 8px;
+    position: absolute;
+    cursor: move;
+    z-index: 3;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+/* Suppression de l'animation de la pompe */
+.pump::after {
+    display: none;
+}
+
+.tank {
+    width: 80px;
+    height: 100px;
+    background: linear-gradient(135deg, #1abc9c, #16a085);
+    border: 2px solid #0e6655;
+    border-radius: 10px;
+    position: absolute;
+    cursor: move;
+    z-index: 3;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+    transition: all 0.3s ease;
+    overflow: hidden;
+}
+
+.tank::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 60%;
+    background: rgba(26, 188, 156, 0.5);
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+}
+
+.pump:hover, .tank:hover {
+    transform: scale(1.05);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.25);
+}
+
+.pipe {
+    height: 4px;
+    background-color: var(--dark-color);
+    position: absolute;
+    transform-origin: left center;
+    z-index: 2;
+    transition: background-color 0.3s ease;
+    border-radius: 2px;
+    top: 50%;
+    margin-top: -2px;
+}
+
+.pipe:hover {
+    background-color: var(--primary-color);
+    height: 6px;
+    margin-top: -3px;
+}
+
+.pipe.connected {
+    background-color: var(--secondary-color);
+    box-shadow: 0 0 5px rgba(126, 200, 227, 0.5);
+}
+
+.connection-indicator {
+    position: absolute;
+    height: 4px;
+    background: linear-gradient(to right, rgba(52, 152, 219, 0.5), rgba(41, 128, 185, 0.5));
+    transform-origin: left center;
+    z-index: 0;
+    border-radius: 2px;
+    pointer-events: none;
+    animation: pulse-connection 1.5s infinite;
+}
+
+@keyframes pulse-connection {
+    0% { opacity: 0.3; }
+    50% { opacity: 0.7; }
+    100% { opacity: 0.3; }
+}
+
+.preview-line {
+    position: absolute;
+    height: 4px;
+    background: rgba(149, 165, 166, 0.3);
+    pointer-events: none;
+    z-index: 1;
+    transform-origin: left center;
+}
+
+.tool-btn.active {
+    background: var(--dark-color);
+    box-shadow: inset 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.panel {
+    position: absolute;
+    background: linear-gradient(135deg, #E3F0F9, #BDD9EC);
+    border: 1px solid #A9CBDF;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    opacity: 0.8;
+    transition: all 0.3s ease;
+}
+
+.panel.dragging {
+    opacity: 0.6;
+    z-index: 1000;
+}
+
+.panel:hover {
+    opacity: 1;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    transform: translateY(-2px);
+}
+
+.zoom-controls {
+    position: absolute;
+    bottom: 1rem;
+    right: 1rem;
+    display: flex;
+    gap: 0.5rem;
+    z-index: 10;
+}
+
+.zoom-btn {
+    background: rgba(255, 255, 255, 0.9);
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    transition: all 0.3s ease;
+}
+
+.zoom-btn:hover {
+    background: var(--primary-color);
+    color: white;
+    transform: scale(1.1);
+}
+
+.configure-btn {
+    background: var(--primary-color);
+    color: white;
+    padding: 0.8rem 1.5rem;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 1rem;
+    width: 100%;
+    box-shadow: 0 4px 6px rgba(126, 200, 227, 0.2);
+}
+
+.configure-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 8px rgba(126, 200, 227, 0.3);
+}
+
+/* Animation de fond améliorée */
+body {
+    background: linear-gradient(-45deg, #E3F0F9, #DCE9F5, #D5E3F0, #CADDE9);
+    background-size: 400% 400%;
+    animation: gradient 15s ease infinite;
+    position: relative;
+    overflow-x: hidden;
+}
+
+body::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('/static/images/solar-pattern.svg');
+    opacity: 0.03;
+    z-index: -1;
+    animation: patternMove 120s linear infinite;
+}
+
+@keyframes patternMove {
+    0% { background-position: 0 0; }
+    100% { background-position: 1000px 1000px; }
+}
+
+/* ROI Calculator */
+.roi-calculator {
+    margin-top: 20px;
+    background-color: var(--light-color);
+    padding: 15px;
+    border-radius: 8px;
+}
+
+.roi-calculator h4 {
+    color: var(--dark-color);
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-size: 1.1rem;
+}
+
+.roi-item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+}
+
+.roi-label {
+    color: var(--text-secondary);
+}
+
+.roi-value {
+    color: var(--primary-color);
+    font-weight: bold;
+}
+
+/* Client info modal with class-based activation */
+.client-info-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.client-info-modal.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.client-info-content {
+    background-color: white;
+    border-radius: 15px;
+    padding: 2rem;
+    width: 90%;
+    max-width: 500px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+
+.client-info-content h2 {
+    color: var(--primary-color);
+    margin-bottom: 1.5rem;
+    text-align: center;
+    font-size: 1.5rem;
+}
+
+.client-info-form {
+    margin-bottom: 1.5rem;
+}
+
+.mt-4 {
+    margin-top: 1rem;
+}
+
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.form-group input, .form-group textarea {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #E0E7EE;
+    border-radius: 8px;
+    background-color: #F9FBFD;
+}
+
+.form-group input:focus, .form-group textarea:focus {
+    border-color: var(--primary-color);
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(126, 200, 227, 0.2);
+}
+
+.client-info-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5rem;
+}
+
+.client-info-buttons button {
+    padding: 0.7rem 1.5rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.client-info-submit {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.client-info-submit:hover {
+    background-color: var(--secondary-color);
+    transform: translateY(-2px);
+}
+
+.client-info-cancel {
+    background-color: #F0F5F9;
+    color: var(--text-primary);
+}
+
+.client-info-cancel:hover {
+    background-color: #E5EBEF;
+}
+
+/* Updated loading indicator */
+.loading-indicator {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease-out;
+}
+
+.loading-indicator.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.spinner {
+    width: 50px;
+    height: 50px;
+    border: 5px solid #F0F5F9;
+    border-top: 5px solid var(--primary-color);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-bottom: 1rem;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Instructions Panel */
+.instructions-panel {
+    background: rgba(255, 255, 255, 0.9);
+    padding: 1rem;
+    border-radius: 10px;
+    margin-top: 1rem;
+    border-left: 4px solid var(--primary-color);
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    position: absolute;
+    right: 1rem;
+    bottom: 1rem;
+    width: 275px;
+    max-width: 100%;
+    z-index: 10;
+}
+
+.instructions-panel h4 {
+    font-size: 1rem;
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+    color: var(--dark-color);
+}
+
+.instructions-panel ul {
+    list-style-type: none;
+    padding-left: 0.5rem;
+    margin: 0;
+}
+
+.instructions-panel li {
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+    color: var(--text-secondary);
+}
+
+.instructions-panel li i {
+    color: var(--primary-color);
+    margin-right: 0.5rem;
+}
+
+/* CTA Section */
+.cta-section {
+    background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+    color: white;
+    text-align: center;
+    border-radius: 15px;
+    padding: 3rem 2rem;
+    margin-top: 2rem;
+    box-shadow: var(--card-shadow);
+}
+
+.cta-content {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.cta-section h2 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    color: white;
+}
+
+.cta-section p {
+    font-size: 1.1rem;
+    margin-bottom: 2rem;
+    opacity: 0.9;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.cta-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.cta-section .cta-button {
+    background: white;
+    color: var(--primary-color);
+    padding: 0.8rem 1.8rem;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.cta-section .cta-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
+}
+
+.cta-section .cta-button.secondary {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    border: 2px solid white;
+}
+
+.cta-section .cta-button.secondary:hover {
+    background: white;
+    color: var(--primary-color);
+}
+
+/* Amélioration des couleurs pour le configurateur */
+:root {
+    --primary-color: #7EC8E3;
+    --secondary-color: #9AD0EC;
+    --dark-color: #566270;
+    --light-color: #F0F5F9;
+    --accent-color: #C3AED6;
+    --text-primary: #333F4D;
+    --text-secondary: #697886;
+    --background-color: #F6F9FC;
+    --card-background: #ffffff;
+} 

@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Devis SunWave</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            color: #333;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+            display: flex;
+            justify-content: center;
+        }
+        .container {
+            width: 100%;
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 30px;
+            background-color: white;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            border-radius: 10px;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #2ecc71;
+            padding-bottom: 20px;
+        }
+        .logo img {
+            height: 80px;
+            max-width: 100%;
+        }
+        .company-info {
+            text-align: right;
+        }
+        .company-info h2 {
+            color: #2ecc71;
+            margin: 0;
+            font-size: 28px;
+        }
+        .quote-title {
+            background: linear-gradient(135deg, #2ecc71, #3498db);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .quote-title h1 {
+            margin: 0;
+            font-size: 24px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: rgb(41, 7, 7);
+        }
+        .quote-title p {
+            margin: 10px 0 0;
+            font-size: 16px;
+            opacity: 0.9;
+            color: rgb(36, 31, 31);
+        }
+        .client-info, .project-info {
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        .section-title {
+            color: #2ecc71;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 10px;
+            margin-top: 0;
+            margin-bottom: 20px;
+            font-size: 20px;
+        }
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        .info-item {
+            margin-bottom: 15px;
+        }
+        .info-label {
+            font-weight: bold;
+            color: #555;
+            margin-bottom: 5px;
+            display: block;
+        }
+        .info-value {
+            color: #333;
+        }
+        .cost-breakdown {
+            margin-bottom: 30px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        th {
+            background-color: #f1f1f1;
+            text-align: left;
+            padding: 12px;
+            border-bottom: 2px solid #ddd;
+            color: #555;
+        }
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #eee;
+        }
+        .item-description {
+            width: 60%;
+        }
+        .item-quantity, .item-price, .item-total {
+            width: 13.33%;
+            text-align: right;
+        }
+        .total-row td {
+            font-weight: bold;
+            border-top: 2px solid #ddd;
+            border-bottom: none;
+        }
+        .savings-section {
+            background: linear-gradient(135deg, #e8f5e9, #e3f2fd);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        .savings-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 20px;
+            text-align: center;
+        }
+        .savings-item {
+            padding: 15px;
+            background-color: rgba(255, 255, 255, 0.7);
+            border-radius: 8px;
+        }
+        .savings-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #2ecc71;
+            margin-bottom: 5px;
+        }
+        .savings-label {
+            color: #555;
+            font-size: 14px;
+        }
+        .installation-diagram {
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        .installation-diagram img {
+            max-width: 100%;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .terms-conditions {
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 50px auto 40px;
+            font-size: 14px;
+            color: #666;
+            max-width: 80%;
+        }
+        .footer {
+            text-align: center;
+            color: #777;
+            font-size: 14px;
+            border-top: none;
+            margin-top: 20px;
+            padding-top: 10px;
+        }
+        .signature-section {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto;
+            gap: 40px;
+            text-align: center;
+            width: auto;
+        }
+        .signature-box {
+            border: 2px solid #eaeaea;
+            padding: 25px;
+            width: 300px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            background-color: #fafafa;
+        }
+        .signature-title {
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+        .signature-space {
+            height: 120px;
+            background-color: white;
+            border: 1px dashed #ccc;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+        .signature-line {
+            border-top: 2px solid #333;
+            margin: 15px auto;
+            width: 80%;
+        }
+        .signature-subtitle {
+            color: #666;
+            font-size: 14px;
+            margin: 8px 0;
+        }
+        .highlight {
+            color: #2ecc71;
+            font-weight: bold;
+        }
+        .optimization-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        @media print {
+            body {
+                background-color: white;
+            }
+            .container {
+                box-shadow: none;
+                padding: 0;
+            }
+            .page-break {
+                page-break-before: always;
+                height: 0;
+                display: block;
+                margin: 0;
+            }
+            .footer {
+                position: fixed;
+                bottom: 20px;
+                left: 0;
+                right: 0;
+                text-align: center;
+                padding: 10px;
+                display: block !important;
+                border-top: none !important;
+            }
+            .page-1-footer {
+                display: none;
+            }
+            hr, .divider {
+                display: none !important;
+            }
+            table {
+                border-collapse: collapse !important;
+            }
+            td {
+                border: none !important;
+            }
+        }
+        .signature-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 70px auto;
+            height: 250px;
+            width: 100%;
+        }
+        
+        .page-1-footer {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+        
+        .footer {
+            text-align: center;
+            color: #777;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">
+                <img src="{{ url_for('static', filename='images/SunWave.png', _external=True) }}" alt="SunWave Logo">
+            </div>
+            <div class="company-info">
+                <h2>SunWave</h2>
+                <p>Solutions d'optimisation solaire</p>
+                <p>contact@sunwave.fr | +33 7 83 26 53 18</p>
+            </div>
+        </div>
+        
+        <div class="quote-title">
+            <h1>DEVIS D'INSTALLATION SYSTÈME D'ARROSAGE AUTOMATIQUE</h1>
+            <p>Référence: SW-{{ date.replace('/', '') }}-{{ data.surface|int }}</p>
+        </div>
+        
+        <div class="client-info">
+            <h3 class="section-title">Informations Client</h3>
+            <div class="info-grid">
+                <div class="info-item">
+                    <span class="info-label">Nom:</span>
+                    <span class="info-value">{{ client.name }}</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Adresse:</span>
+                    <span class="info-value">{{ client.address }}</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Téléphone:</span>
+                    <span class="info-value">{{ client.phone }}</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Email:</span>
+                    <span class="info-value">{{ client.email }}</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="project-info">
+            <h3 class="section-title">Détails du Projet</h3>
+            <div class="info-grid">
+                <div class="info-item">
+                    <span class="info-label">Surface totale:</span>
+                    <span class="info-value">{{ data.surface }} m²</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Type de panneau:</span>
+                    <span class="info-value">{{ data.panelType }}</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Zone climatique:</span>
+                    <span class="info-value">{{ data.climateZone }}</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Date du devis:</span>
+                    <span class="info-value">{{ date }}</span>
+                </div>
+            </div>
+        </div>
+
+                <div class="page-break"></div>
+
+        
+        <div class="cost-breakdown">
+            <h3 class="section-title">Détail des Coûts</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th class="item-description">Description</th>
+                        <th class="item-quantity">Quantité</th>
+                        <th class="item-price">Prix unitaire</th>
+                        <th class="item-total">Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="item-description">Buses d'arrosage</td>
+                        <td class="item-quantity">{{ data.sprinklers }}</td>
+                        <td class="item-price">50 €</td>
+                        <td class="item-total">{{ data.detailedCostBreakdown.sprinklerCost }} €</td>
+                    </tr>
+                    <tr>
+                        <td class="item-description">Tuyauterie</td>
+                        <td class="item-quantity">{{ data.pipeLength|round(1) }} m</td>
+                        <td class="item-price">15 €/m</td>
+                        <td class="item-total">{{ data.detailedCostBreakdown.pipeCost }} €</td>
+                    </tr>
+                    <tr>
+                        <td class="item-description">Capteurs</td>
+                        <td class="item-quantity">{{ data.sensors }}</td>
+                        <td class="item-price">75 €</td>
+                        <td class="item-total">{{ data.detailedCostBreakdown.sensorCost }} €</td>
+                    </tr>
+                    <tr>
+                        <td class="item-description">Pompes</td>
+                        <td class="item-quantity">{{ data.pump_requirements.count }}</td>
+                        <td class="item-price">1 200 €</td>
+                        <td class="item-total">{{ data.detailedCostBreakdown.pumpCost }} €</td>
+                    </tr>
+                    <tr>
+                        <td class="item-description">Cuve (10m³)</td>
+                        <td class="item-quantity">1</td>
+                        <td class="item-price">2 500 €</td>
+                        <td class="item-total">{{ data.detailedCostBreakdown.tankCost }} €</td>
+                    </tr>
+                    <tr>
+                        <td class="item-description">Sous-total matériel</td>
+                        <td class="item-quantity"></td>
+                        <td class="item-price"></td>
+                        <td class="item-total">{{ data.detailedCostBreakdown.totalMaterialCost }} €</td>
+                    </tr>
+                    <tr>
+                        <td class="item-description">Installation (40%)</td>
+                        <td class="item-quantity"></td>
+                        <td class="item-price"></td>
+                        <td class="item-total">{{ data.installationCost }} €</td>
+                    </tr>
+                    <tr class="total-row">
+                        <td class="item-description">TOTAL</td>
+                        <td class="item-quantity"></td>
+                        <td class="item-price"></td>
+                        <td class="item-total">{{ data.totalCost }} €</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <div class="savings-section">
+            <h3 class="section-title">Retour sur Investissement</h3>
+            <div class="optimization-row">
+                <span>Production optimisée: <span class="highlight">+{{ data.optimizedProduction }}%</span></span>
+                <span>Économies annuelles: <span class="highlight">{{ data.yearlyGain }} €</span></span>
+            </div>
+            <div class="savings-grid">
+                <div class="savings-item">
+                    <div class="savings-value">{{ (data.totalCost / data.yearlyGain)|round(1) }} ans</div>
+                    <div class="savings-label">Retour sur investissement</div>
+                </div>
+                <div class="savings-item">
+                    <div class="savings-value">{{ (data.yearlyGain * 5)|round(0) }} €</div>
+                    <div class="savings-label">Économies sur 5 ans</div>
+                </div>
+                <div class="savings-item">
+                    <div class="savings-value">{{ (data.yearlyGain * 25)|round(0) }} €</div>
+                    <div class="savings-label">Économies sur 25 ans</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer page-1-footer">
+            <p>SunWave - Solutions d'optimisation solaire</p>
+            <p>SIRET: 123 456 789 00010 - TVA: FR12 123 456 789</p>
+            <p>www.sunwave.fr</p>
+        </div>
+        
+        <div class="page-break"></div>
+        
+        <div style="min-height: 800px; position: relative; border: none;">
+            <div class="terms-conditions">
+                <h3 class="section-title">Conditions Générales</h3>
+                <p><strong>Validité du devis:</strong> Ce devis est valable 30 jours à compter de la date d'émission.</p>
+                <p><strong>Conditions de paiement:</strong> 30% à la commande, 40% au début des travaux, 30% à la livraison.</p>
+                <p><strong>Délai d'exécution:</strong> 4 à 6 semaines après acceptation du devis et versement de l'acompte.</p>
+                <p><strong>Garantie:</strong> Tous nos équipements sont garantis 2 ans pièces et main d'œuvre.</p>
+                <p><strong>Maintenance:</strong> Un contrat de maintenance annuel vous sera proposé à la fin des travaux.</p>
+            </div>
+            
+            <div style="position: absolute; top: 50%; left: 0; right: 0; transform: translateY(-50%); border: none;">
+                <table width="100%" style="border-collapse: collapse; border: none; border-spacing: 0;">
+                    <tr style="border: none;">
+                        <td width="50%" align="center" style="border: none; vertical-align: top;">
+                            <p class="signature-title" style="margin-bottom: 10px;">SunWave</p>
+                            <div style="height: 120px; background-color: white; border: 1px dashed #ccc; width: 80%; margin: 10px auto; border-radius: 8px;"></div>
+                            <div style="border-top: 2px solid #333; width: 80%; margin: 10px auto;"></div>
+                            <p style="color: #666; font-size: 14px; margin: 5px 0;">Date et signature</p>
+                        </td>
+                        <td width="50%" align="center" style="border: none; vertical-align: top;">
+                            <p class="signature-title" style="margin-bottom: 10px;">{{ client.name }}</p>
+                            <div style="height: 120px; background-color: white; border: 1px dashed #ccc; width: 80%; margin: 10px auto; border-radius: 8px;"></div>
+                            <div style="border-top: 2px solid #333; width: 80%; margin: 10px auto;"></div>
+                            <p style="color: #666; font-size: 14px; margin: 5px 0;">Date et signature</p>
+                            <p style="color: #666; font-size: 14px; margin: 0;">Bon pour accord</p>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        
+        <div style="position: fixed; bottom: 20px; left: 0; right: 0; text-align: center; font-size: 14px; color: #777; padding: 10px; border: none;">
+            <p>SunWave - Solutions d'optimisation solaire</p>
+            <p>SIRET: 123 456 789 00010 - TVA: FR12 123 456 789</p>
+            <p>www.sunwave.fr</p>
+        </div>
+    </div>
+</body>
+</html> 

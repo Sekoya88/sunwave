@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projet & Équipe - SunWave</title>
+    <link rel="stylesheet" href="/static/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script defer src="/static/script.js"></script>
+    <meta name="description" content="Découvrez l'équipe derrière le projet SunWave - Système innovant d'optimisation pour centrales photovoltaïques en milieu désertique">
+    <style>
+        .team-section {
+            padding: 5rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .team-intro {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .team-intro h2 {
+            font-size: 2.5rem;
+            color: #2c3e50;
+            margin-bottom: 1rem;
+        }
+        
+        .team-intro p {
+            font-size: 1.1rem;
+            color: #555;
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+        
+        .team-members {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+        
+        .team-member {
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            padding: 2rem;
+            transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
+            z-index: 1;
+            overflow: hidden;
+            text-align: center;
+        }
+        
+        .team-member:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+        
+        .name-oval {
+            display: inline-block;
+            padding: 6px 20px;
+            border: 2px solid #3498db;
+            border-radius: 30px;
+            margin-bottom: 15px;
+            background-color: white;
+            position: relative;
+            z-index: 3;
+            max-width: 90%;
+        }
+        
+        .name-oval span {
+            font-weight: bold;
+            color: #333;
+            font-size: 18px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .team-member h3 {
+            display: none; /* Masquer le h3 puisque nous utilisons l'ovale */
+        }
+        
+        .linkedin-corner {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 40px;
+            height: 40px;
+            background-color: #0077b5;
+            clip-path: polygon(100% 0, 0 0, 100% 100%);
+            z-index: 2;
+        }
+        
+        .linkedin-corner:before {
+            content: '\f0e1';
+            font-family: 'Font Awesome 5 Brands';
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            color: white;
+            font-size: 14px;
+        }
+        
+        .team-member .description {
+            color: #555;
+            line-height: 1.6;
+            margin: 15px 0;
+            text-align: left;
+        }
+        
+        .team-member .overlay-link {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            cursor: pointer;
+        }
+        
+        .team-member .content {
+            position: relative;
+            z-index: 2;
+            pointer-events: none;
+        }
+        
+        .team-member .role {
+            color: #7f8c8d;
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+        
+        .profile-image {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 1rem;
+            border: 3px solid #3498db;
+            transition: transform 0.3s ease;
+        }
+        
+        .team-member:hover .profile-image {
+            transform: scale(1.05);
+            border-color: #0077b5;
+        }
+        
+        .linkedin-link {
+            display: inline-flex;
+            align-items: center;
+            color: #0077b5;
+            text-decoration: none;
+            font-weight: 500;
+            margin-top: 1rem;
+            transition: color 0.2s;
+            pointer-events: auto;
+            position: relative;
+            z-index: 3;
+            border-radius: 4px;
+            padding: 6px 12px;
+            background-color: #f8f9fa;
+        }
+        
+        .linkedin-link:hover {
+            background-color: #e2e6ea;
+            color: #005582;
+        }
+        
+        .linkedin-link i {
+            margin-right: 5px;
+        }
+        
+        .context-section {
+            margin-top: 2rem;
+            background: #f9f9f9;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        .context-section h3 {
+            color: #2c3e50;
+            margin-bottom: 1rem;
+            font-size: 1.8rem;
+        }
+        
+        .context-section p {
+            color: #555;
+            line-height: 1.7;
+            margin-bottom: 1rem;
+        }
+        
+        .acknowledgements {
+            background: #f7fbfe;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 3rem;
+            border-left: 4px solid #3498db;
+        }
+        
+        .acknowledgements h3 {
+            color: #3498db;
+            margin-bottom: 1rem;
+        }
+        
+        @media (max-width: 768px) {
+            .team-members {
+                grid-template-columns: 1fr;
+            }
+            
+            .team-intro h2 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="scroll-container">
+        <header>
+            <div class="logo">
+                <img src="/static/images/SunWave.png" alt="SunWave" loading="eager">
+                <span><h3>SunWave</h3></span>
+            </div>
+
+            <nav>
+                <a href="/">Accueil</a>
+                <a href="/configurateur">Configurateur</a>
+                <a href="/projet-equipe" class="active">Projet & Équipe</a>
+                <button class="mobile-menu-btn" aria-label="Menu">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </nav>
+        </header>
+
+        <div class="mobile-nav">
+            <a href="/">Accueil</a>
+            <a href="/configurateur">Configurateur</a>
+            <a href="/projet-equipe" class="active">Projet & Équipe</a>
+        </div>
+
+        <main class="team-section">
+            <div class="team-intro">
+                <h2>Notre Équipe</h2>
+                <p>Pour réaliser ce projet, nous avons formé une équipe complémentaire de professionnels, combinant expertise technique et vision innovante.</p>
+            </div>
+            
+            <div class="team-members">
+                <div class="team-member">
+                    <a href="https://www.linkedin.com/in/nicolas-edmond8/" target="_blank" rel="noopener noreferrer" class="overlay-link" aria-label="Profil LinkedIn de Nicolas EDMOND"></a>
+                    <div class="linkedin-corner"></div>
+                    <div class="content">
+                        <div class="name-oval">
+                            <span>Nicolas EDMOND</span>
+                        </div>
+                        <h3>Nicolas EDMOND</h3>
+                        <span class="role">Alternant chez RTE - Chargé d'affaires</span>
+                        <p class="description">
+                            Responsable de la programmation en langage C, du codage du site web & de son déploiement, des formules de rendement ainsi que de l'analyse de fonctionnement des capteurs et de l'utilisation du microcontrôleur.
+                        </p>
+                        <a href="https://www.linkedin.com/in/nicolas-edmond8/" target="_blank" rel="noopener noreferrer" class="linkedin-link">
+                            <i class="fab fa-linkedin"></i> Cliquez pour voir le profil
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="team-member">
+                    <a href="https://www.linkedin.com/in/dreanjulien/" target="_blank" rel="noopener noreferrer" class="overlay-link" aria-label="Profil LinkedIn de Julien DREAN"></a>
+                    <div class="linkedin-corner"></div>
+                    <div class="content">
+                        <div class="name-oval">
+                            <span>Julien DREAN</span>
+                        </div>
+                        <h3>Julien DREAN</h3>
+                        <span class="role">Alternant au CETIM - Ingénieur efficacité énergétique</span>
+                        <p class="description">
+                            En charge de la conception électronique, du choix du matériel, des schémas électriques, et de la liaison entre les équipements ainsi que du débogage du code C.
+                        </p>
+                        <a href="https://www.linkedin.com/in/dreanjulien/" target="_blank" rel="noopener noreferrer" class="linkedin-link">
+                            <i class="fab fa-linkedin"></i> Cliquez pour voir le profil
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="team-member">
+                    <a href="https://www.linkedin.com/in/marie-desplanques-77465a1a6/" target="_blank" rel="noopener noreferrer" class="overlay-link" aria-label="Profil LinkedIn de Marie DESPLANQUES"></a>
+                    <div class="linkedin-corner"></div>
+                    <div class="content">
+                        <div class="name-oval">
+                            <span>Marie DESPLANQUES</span>
+                        </div>
+                        <h3>Marie DESPLANQUES</h3>
+                        <span class="role">Alternante chez AMICA - Chargée d'affaires</span>
+                        <p class="description">
+                            Responsable de la gestion du projet avec la mise en place du planning, des cahiers des charges, du choix du matériel, des synoptiques, du rapport, et du raccordement et soudure des composants.
+                        </p>
+                        <a href="https://www.linkedin.com/in/marie-desplanques-77465a1a6/" target="_blank" rel="noopener noreferrer" class="linkedin-link">
+                            <i class="fab fa-linkedin"></i> Cliquez pour voir le profil
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="team-member">
+                    <a href="https://www.linkedin.com/in/cyril-coint-5a115b20b/" target="_blank" rel="noopener noreferrer" class="overlay-link" aria-label="Profil LinkedIn de Cyril COINT"></a>
+                    <div class="linkedin-corner"></div>
+                    <div class="content">
+                        <div class="name-oval">
+                            <span>Cyril COINT</span>
+                        </div>
+                        <h3>Cyril COINT</h3>
+                        <span class="role">Alternant chez SUNELIS - Chargé d'études</span>
+                        <p class="description">
+                            En charge du choix du matériel, des recherches sur la partie pratique, et de la conception 3D du modèle.
+                        </p>
+                        <a href="https://www.linkedin.com/in/cyril-coint-5a115b20b/" target="_blank" rel="noopener noreferrer" class="linkedin-link">
+                            <i class="fab fa-linkedin"></i> Cliquez pour voir le profil
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="acknowledgements">
+                <h3>Remerciements</h3>
+                <p>
+                    Nous remercions chaleureusement notre professeur encadrant, Kamel Guerchouche pour ses conseils ainsi que l'ESME pour son budget alloué et pour la mise à disposition de tout le matériel que nous avons pu utiliser.
+                </p>
+            </div>
+            
+            <div class="context-section">
+                <h3>Contexte et introduction au projet</h3>
+                <p>
+                    Lors de notre entrée en troisième année d'alternance, M. GUERCHOUCHE nous a annoncé le début d'un nouveau projet qui allait s'étaler sur l'année scolaire entière. Ce projet doit porter sur une solution technique comportant un ou plusieurs capteurs. C'est ainsi que nous avons choisi de réaliser notre système SunWave.
+                </p>
+                <p>
+                    Les centrales photovoltaïques prennent de plus en plus d'importance et la question de leur développement dans le désert se pose de plus en plus. En effet, l'installation de centrales dans ces milieux pourrait être un pas vers la transition énergétique car le désert présente plusieurs avantages : de l'espace ainsi qu'une forte luminosité.
+                </p>
+                <p>
+                    Cependant, il existe des problématiques sur ces installations comme la distance entre le champ photovoltaïque et la zone à alimenter en électricité, les fortes chaleurs qui réduisent le rendement des modules photovoltaïques mais surtout le sable et la poussière qui s'accumulent sur les modules photovoltaïques.
+                </p>
+                <p>
+                    Cette dernière problématique réduit fortement le rendement. Des études montrent que si le sable présent sur les systèmes photovoltaïques est enlevé régulièrement, un gain moyen de performances d'environ 15 % peut être obtenu. Sur la base d'une installation de 100 kWc (environ 250 modules), cela se traduit par environ 15 000 kWh supplémentaires par an. Le retrait régulier du sable des systèmes photovoltaïques est essentiel d'un point de vue économique.
+                </p>
+                <p>
+                    <strong>Comment optimiser le rendement des centrales photovoltaïques installées dans les déserts ? Quelles solutions techniques peuvent être mises en place pour pallier à l'accumulation de sable?</strong>
+                </p>
+                <p>
+                    Notre projet consiste à utiliser un système d'irrigation afin de retirer les résidus sur la surface des modules photovoltaïques.
+                </p>
+                <p>
+                    Le système doit être simple et efficace. Il s'agira d'un système d'irrigation similaire à un arrosage automatique. A l'aide d'une pompe, de buses et d'un tuyau anti-UV, un film d'eau vient balayer chaque module afin de retirer le maximum de poussière et de sable. Par la même occasion, ce système permet de réduire la haute température des modules. L'eau sera récupérée et filtrée afin de limiter notre impact environnemental.
+                </p>
+            </div>
+        </main>
+
+        <footer>
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <img src="/static/images/SunWave.png" alt="SunWave" loading="lazy">
+                    <h3>SunWave</h3>
+                </div>
+                <div class="footer-links">
+                    <h4>Navigation</h4>
+                    <a href="/">Accueil</a>
+                    <a href="/configurateur">Configurateur</a>
+                    <a href="/projet-equipe">Projet & Équipe</a>
+                </div>
+                <div class="footer-contact">
+                    <h4>Contact</h4>
+                    <p><i class="fas fa-envelope"></i> contact@sunwave.fr</p>
+                    <p><i class="fas fa-phone"></i> +33 (0)7 83 26 53 18</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 SunWave - Tous droits réservés</p>
+            </div>
+        </footer>
+    </div>
+</body>
+</html> 

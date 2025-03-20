@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Configurateur SunWave</title>
+    <link rel="stylesheet" href="/static/styles.css">
+    <link rel="stylesheet" href="/static/configurator.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="/static/images/SunWave.png" alt="SunWave">
+            <span><h3>SunWave</h3></span>
+        </div>
+        <nav>
+            <a href="/">Accueil</a>
+            <a href="/configurateur" class="active">Configurateur</a>
+            <a href="/projet-equipe">Projet & Équipe</a>
+        </nav>
+    </header>
+
+    <div class="configurator-container">
+        <div class="config-sidebar">
+            <h2>Configuration Installation</h2>
+            <div class="config-form">
+                <div class="form-group">
+                    <label for="surface">Surface totale (m²)</label>
+                    <input type="number" id="surface" min="1" value="100" aria-label="Surface totale en mètres carrés">
+                </div>
+                <div class="form-group">
+                    <label for="panelType">Type de panneau</label>
+                    <select id="panelType" aria-label="Type de panneau solaire">
+                        <option value="standard">Standard (1m x 1.6m)</option>
+                        <option value="large">Large (1.2m x 2m)</option>
+                    </select>
+                </div>
+                <button class="configure-btn" onclick="configurator.updateLayout()">
+                    <i class="fas fa-cog"></i> Configurer
+                </button>
+            </div>
+            
+            <!-- Partie informations techniques -->
+            <h2 class="mt-4">Options système</h2>
+            <div class="system-options">
+                <div class="form-group">
+                    <label for="climateZone">Zone climatique</label>
+                    <select id="climateZone">
+                        <option value="desert">Désertique</option>
+                        <option value="arid">Aride</option>
+                        <option value="temperate">Tempéré</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="maintenanceFrequency">Fréquence d'entretien</label>
+                    <select id="maintenanceFrequency">
+                        <option value="weekly">Hebdomadaire</option>
+                        <option value="biweekly">Bi-hebdomadaire</option>
+                        <option value="monthly">Mensuelle</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="design-area">
+            <div class="toolbar">
+                <button class="tool-btn" data-tool="sprinkler">
+                    <i class="fas fa-tint"></i> Ajouter Buse
+                </button>
+                <button class="tool-btn" data-tool="sensor">
+                    <i class="fas fa-microchip"></i> Ajouter Capteur
+                </button>
+                <button class="tool-btn" data-tool="pipe">
+                    <i class="fas fa-grip-lines"></i> Tracer Tuyau
+                </button>
+                <button class="tool-btn" data-tool="pump">
+                    <i class="fas fa-cog fa-spin"></i> Ajouter Pompe
+                </button>
+                <button class="tool-btn" data-tool="tank">
+                    <i class="fas fa-water"></i> Ajouter Cuve
+                </button>
+            </div>
+            
+            <div class="drag-area" id="dragArea">
+                <!-- La grille sera générée ici -->
+            </div>
+
+            <div class="zoom-controls">
+                <button class="zoom-btn" onclick="configurator.zoom(1.2)">+</button>
+                <button class="zoom-btn" onclick="configurator.zoom(0.8)">-</button>
+            </div>
+            
+            <div class="instructions-panel">
+                <h4><i class="fas fa-info-circle"></i> Instructions</h4>
+                <ul>
+                    <li><i class="fas fa-mouse-pointer"></i> Cliquez sur un outil puis sur la zone de dessin pour ajouter un élément</li>
+                    <li><i class="fas fa-arrows-alt"></i> Glissez-déposez les éléments pour les déplacer</li>
+                    <li><i class="fas fa-trash-alt"></i> Ctrl+Clic pour supprimer un élément</li>
+                    <li><i class="fas fa-project-diagram"></i> Connectez les tuyaux entre les pompes, cuves et buses</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="price-calculator">
+            <h3>Devis Estimatif</h3>
+            <div class="price-details">
+                <div class="price-item">
+                    <span class="item-label">Buses d'arrosage:</span>
+                    <span class="item-value"><span id="sprinklerCount">0</span> x 50€</span>
+                </div>
+                <div class="price-item">
+                    <span class="item-label">Tuyauterie:</span>
+                    <span class="item-value"><span id="pipeLength">0</span>m x 15€/m</span>
+                </div>
+                <div class="price-item">
+                    <span class="item-label">Capteurs:</span>
+                    <span class="item-value"><span id="sensorCount">0</span> x 75€</span>
+                </div>
+                <div class="price-item">
+                    <span class="item-label">Pompes:</span>
+                    <span class="item-value"><span id="pumpCount">0</span> x 1200€</span>
+                </div>
+                <div class="price-item">
+                    <span class="item-label">Cuve:</span>
+                    <span class="item-value"><span id="tankCount">0</span> x 2500€</span>
+                </div>
+                <div class="price-item">
+                    <span class="item-label">Installation:</span>
+                    <span class="item-value"><span id="installationCost">0</span>€</span>
+                </div>
+                <div class="total-price">
+                    <span class="total-label">Total:</span>
+                    <span class="total-value"><span id="totalCost">0</span>€</span>
+                </div>
+            </div>
+            
+            <div class="roi-calculator">
+                <h4>Retour sur investissement</h4>
+                <div class="roi-item">
+                    <span class="roi-label">Économies annuelles:</span>
+                    <span class="roi-value"><span id="yearlyGain">0</span>€</span>
+                </div>
+                <div class="roi-item">
+                    <span class="roi-label">ROI estimé:</span>
+                    <span class="roi-value"><span id="roiYears">0</span> ans</span>
+                </div>
+                <div class="roi-item">
+                    <span class="roi-label">Production optimisée:</span>
+                    <span class="roi-value">+<span id="optimizedProduction">0</span>%</span>
+                </div>
+            </div>
+            
+            <button class="generate-quote-btn" onclick="configurator.generatePDF()">
+                <i class="fas fa-file-pdf"></i> Générer le devis PDF
+            </button>
+        </div>
+    </div>
+    
+    <script src="/static/configurator.js"></script>
+    <script>
+        // Initialisation du configurateur
+        const configurator = new PriceConfigurator();
+        
+        // Mise à jour des valeurs ROI
+        function updateROIValues() {
+            const totalCost = parseFloat(document.getElementById('totalCost').textContent);
+            const yearlyGain = totalCost * 0.2; // 20% d'économies annuelles
+            const roiYears = totalCost / yearlyGain;
+            const optimizedProduction = 15; // 15% d'optimisation de production
+            
+            document.getElementById('yearlyGain').textContent = yearlyGain.toFixed(0);
+            document.getElementById('roiYears').textContent = roiYears.toFixed(1);
+            document.getElementById('optimizedProduction').textContent = optimizedProduction;
+        }
+        
+        // Observer pour mettre à jour le ROI quand le coût total change
+        const totalCostObserver = new MutationObserver(function(mutations) {
+            updateROIValues();
+        });
+        
+        totalCostObserver.observe(document.getElementById('totalCost'), { 
+            childList: true,
+            characterData: true,
+            subtree: true
+        });
+        
+        // Initialisation des valeurs ROI
+        updateROIValues();
+    </script>
+</body>
+</html> 

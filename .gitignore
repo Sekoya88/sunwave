@@ -1,0 +1,35 @@
+# Environnement virtuel
+venv/
+env/
+ENV/
+
+# Fichiers python compilés
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Distribution / packaging
+dist/
+build/
+*.egg-info/
+
+# Logs
+logs/
+*.log
+
+# Certificats SSL
+certbot/
+
+# Variables d'environnement
+.env.local
+.env.production
+
+# Fichiers système
+.DS_Store
+Thumbs.db
+
+# Autres fichiers
+node_modules/
+package-lock.json
+.env
+.vscode/ 
