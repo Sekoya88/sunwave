@@ -1071,3 +1071,7 @@ function lazyLoadImages() {
         });
     }
 }
+
+// Hint about easter egg in console
+console.log("%c🌟 Un secret se cache dans ce site... Pouvez-vous le trouver? 🌟", "color: #f97316; font-size: 14px; font-weight: bold;");
+console.log("%c(Indice: Tapez le nom de notre entreprise) 💫", "color: #f97316; font-size: 12px;");

@@ -8,11 +8,13 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <script defer src="/static/script.js"></script>
     <meta name="description" content="Découvrez l'équipe derrière le projet SunWave - Système innovant d'optimisation pour centrales photovoltaïques en milieu désertique">
+    <script defer src="/static/easter-egg.js"></script>
     <style>
         .team-section {
             padding: 5rem 2rem;
-            max-width: 1200px;
+            max-width: 1500px;
             margin: 0 auto;
+            position: relative;
         }
         
         .team-intro {
@@ -24,38 +26,84 @@
             font-size: 2.5rem;
             color: #2c3e50;
             margin-bottom: 1rem;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .team-intro h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, #3498db, transparent);
+            border-radius: 3px;
         }
         
         .team-intro p {
             font-size: 1.1rem;
             color: #555;
             max-width: 800px;
-            margin: 0 auto;
+            margin: 1.5rem auto 0;
             line-height: 1.6;
         }
         
         .team-members {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
             margin-bottom: 4rem;
+        }
+        
+        @media (max-width: 1200px) {
+            .team-members {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .team-members {
+                grid-template-columns: 1fr;
+            }
         }
         
         .team-member {
             background: #fff;
             border-radius: 12px;
             box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            padding: 2rem;
+            padding: 1.5rem;
             transition: transform 0.3s, box-shadow 0.3s;
             position: relative;
             z-index: 1;
             overflow: hidden;
             text-align: center;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
         }
         
         .team-member:hover {
             transform: translateY(-5px);
             box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+        
+        .team-member::after {
+            content: '';
+            position: absolute;
+            bottom: -50px;
+            right: -50px;
+            width: 100px;
+            height: 100px;
+            background: radial-gradient(circle, rgba(52, 152, 219, 0.1) 0%, transparent 70%);
+            border-radius: 50%;
+            z-index: -1;
+            transition: all 0.5s ease;
+        }
+        
+        .team-member:hover::after {
+            transform: scale(2);
         }
         
         .name-oval {
@@ -109,6 +157,7 @@
             line-height: 1.6;
             margin: 15px 0;
             text-align: left;
+            flex-grow: 1;
         }
         
         .team-member .overlay-link {
@@ -125,6 +174,9 @@
             position: relative;
             z-index: 2;
             pointer-events: none;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
         }
         
         .team-member .role {
@@ -149,72 +201,262 @@
             border-color: #0077b5;
         }
         
-        .linkedin-link {
-            display: inline-flex;
-            align-items: center;
-            color: #0077b5;
-            text-decoration: none;
-            font-weight: 500;
-            margin-top: 1rem;
-            transition: color 0.2s;
-            pointer-events: auto;
+        /* Fond professionnel pour la page */
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4ecf3 100%);
             position: relative;
-            z-index: 3;
-            border-radius: 4px;
-            padding: 6px 12px;
-            background-color: #f8f9fa;
         }
         
-        .linkedin-link:hover {
-            background-color: #e2e6ea;
-            color: #005582;
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('data:image/svg+xml;utf8,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><path d="M10 10h10v10H10z" fill="%233498db" fill-opacity="0.03"/></svg>');
+            background-size: 50px 50px;
+            pointer-events: none;
+            z-index: -1;
         }
         
-        .linkedin-link i {
-            margin-right: 5px;
+        /* Amélioration du fond de la page */
+        .scroll-container {
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4f1f9 100%);
+            position: relative;
         }
         
-        .context-section {
-            margin-top: 2rem;
-            background: #f9f9f9;
+        .scroll-container::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(52, 152, 219, 0.02) 0%, transparent 50%),
+                radial-gradient(circle at 90% 80%, rgba(52, 152, 219, 0.03) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: -1;
+        }
+        
+        .context-section, .acknowledgements {
+            background-color: white;
             border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
             padding: 2rem;
-            margin-bottom: 3rem;
-        }
-        
-        .context-section h3 {
-            color: #2c3e50;
-            margin-bottom: 1rem;
-            font-size: 1.8rem;
-        }
-        
-        .context-section p {
-            color: #555;
-            line-height: 1.7;
-            margin-bottom: 1rem;
+            margin-bottom: 2rem;
         }
         
         .acknowledgements {
-            background: #f7fbfe;
-            border-radius: 12px;
-            padding: 2rem;
-            margin-bottom: 3rem;
+            animation-delay: 0.4s;
+        }
+        
+        .linkedin-link {
+            margin-top: auto;
+            display: inline-block;
+            color: #0077b5;
+            text-decoration: none;
+            font-weight: bold;
+            pointer-events: auto;
+        }
+        
+        .linkedin-link:hover {
+            text-decoration: underline;
+        }
+
+        /* Nouvelle section pour améliorer les remerciements */
+        .acknowledgements {
+            background: linear-gradient(135deg, #e0f7fa 0%, #bbdefb 100%);
             border-left: 4px solid #3498db;
+            position: relative;
+            overflow: hidden;
+            padding: 2.5rem;
+            box-shadow: 0 8px 20px rgba(52, 152, 219, 0.15);
         }
-        
+
+        .acknowledgements::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('data:image/svg+xml;utf8,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><path d="M25 25C 40 10, 60 10, 75 25S 90 60, 75 75S 40 90, 25 75S 10 40, 25 25Z" stroke="%233498db" fill="none" stroke-opacity="0.07" stroke-width="2"/></svg>');
+            background-size: 120px 120px;
+            pointer-events: none;
+            opacity: 0.4;
+        }
+
+        /* Quote marks for acknowledgements */
+        .acknowledgements::after {
+            content: '"';
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            font-family: Georgia, serif;
+            font-size: 6rem;
+            color: rgba(52, 152, 219, 0.1);
+            line-height: 1;
+        }
+
         .acknowledgements h3 {
-            color: #3498db;
-            margin-bottom: 1rem;
+            font-size: 1.8rem;
+            color: #2c3e50;
+            margin-bottom: 1.2rem;
+            position: relative;
+            display: inline-block;
         }
-        
-        @media (max-width: 768px) {
-            .team-members {
-                grid-template-columns: 1fr;
+
+        .acknowledgements h3::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 40%;
+            height: 3px;
+            background: linear-gradient(90deg, #3498db, transparent);
+            border-radius: 2px;
+        }
+
+        .acknowledgements p {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            color: #34495e;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Amélioration de la section contexte */
+        .context-section {
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+            padding: 2.5rem;
+            position: relative;
+            overflow: hidden;
+            border-top: 4px solid #3498db;
+        }
+
+        .context-section::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 150px;
+            height: 150px;
+            background: radial-gradient(circle, rgba(52, 152, 219, 0.05) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .context-section h3 {
+            font-size: 1.8rem;
+            color: #2c3e50;
+            margin-bottom: 1.2rem;
+            position: relative;
+        }
+
+        .context-section h3::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background: #3498db;
+            border-radius: 2px;
+        }
+
+        .context-section p {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            color: #34495e;
+            margin-bottom: 1.2rem;
+        }
+
+        .context-section p:last-child {
+            margin-bottom: 0;
+        }
+
+        .context-section p strong {
+            color: #2c3e50;
+            font-weight: 600;
+        }
+
+        /* Style pour la question principale */
+        .context-section .main-question {
+            background: linear-gradient(135deg, #f0f9ff 0%, #e1f5fe 100%);
+            padding: 1.2rem 1.5rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+            position: relative;
+            border-left: 4px solid #3498db;
+            font-weight: 500;
+            color: #2c3e50;
+        }
+
+        .context-section .main-question::before {
+            content: '\201C';
+            font-family: Georgia, serif;
+            position: absolute;
+            top: -10px;
+            left: 10px;
+            font-size: 2.5rem;
+            color: rgba(52, 152, 219, 0.2);
+        }
+
+        /* Animation d'entrée pour les sections */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
             }
-            
-            .team-intro h2 {
-                font-size: 2rem;
+            to {
+                opacity: 1;
+                transform: translateY(0);
             }
+        }
+
+        .team-intro, .team-members, .acknowledgements, .context-section {
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+
+        .team-members {
+            animation-delay: 0.2s;
+        }
+
+        .acknowledgements {
+            animation-delay: 0.4s;
+        }
+
+        .context-section {
+            animation-delay: 0.6s;
+        }
+
+        /* Améliorations générales */
+        .team-section::before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            width: 80px;
+            height: 80px;
+            border-top: 4px solid rgba(52, 152, 219, 0.1);
+            border-left: 4px solid rgba(52, 152, 219, 0.1);
+            z-index: 0;
+        }
+
+        .team-section::after {
+            content: '';
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            width: 80px;
+            height: 80px;
+            border-bottom: 4px solid rgba(52, 152, 219, 0.1);
+            border-right: 4px solid rgba(52, 152, 219, 0.1);
+            z-index: 0;
         }
     </style>
 </head>
@@ -311,9 +553,9 @@
                             <span>Cyril COINT</span>
                         </div>
                         <h3>Cyril COINT</h3>
-                        <span class="role">Alternant chez SUNELIS - Chargé d'études</span>
+                        <span class="role">Alternant chez SUNELIS - Conducteur de travaux</span>
                         <p class="description">
-                            En charge du choix du matériel, des recherches sur la partie pratique, et de la conception 3D du modèle.
+                            Responsable maquette, en charge du choix du matériel, des recherches sur la partie pratique, et de la conception 3D du modèle. Responsable du suivi d'exécution des travaux, de la gestion du prototype.
                         </p>
                         <a href="https://www.linkedin.com/in/cyril-coint-5a115b20b/" target="_blank" rel="noopener noreferrer" class="linkedin-link">
                             <i class="fab fa-linkedin"></i> Cliquez pour voir le profil
@@ -325,7 +567,7 @@
             <div class="acknowledgements">
                 <h3>Remerciements</h3>
                 <p>
-                    Nous remercions chaleureusement notre professeur encadrant, Kamel Guerchouche pour ses conseils ainsi que l'ESME pour son budget alloué et pour la mise à disposition de tout le matériel que nous avons pu utiliser.
+                    Nous remercions chaleureusement notre professeur encadrant, <strong>Kamel Guerchouche</strong> pour ses conseils ainsi que l'<strong>ESME</strong> pour son budget alloué et pour la mise à disposition de tout le matériel que nous avons pu utiliser.
                 </p>
             </div>
             
@@ -343,8 +585,8 @@
                 <p>
                     Cette dernière problématique réduit fortement le rendement. Des études montrent que si le sable présent sur les systèmes photovoltaïques est enlevé régulièrement, un gain moyen de performances d'environ 15 % peut être obtenu. Sur la base d'une installation de 100 kWc (environ 250 modules), cela se traduit par environ 15 000 kWh supplémentaires par an. Le retrait régulier du sable des systèmes photovoltaïques est essentiel d'un point de vue économique.
                 </p>
-                <p>
-                    <strong>Comment optimiser le rendement des centrales photovoltaïques installées dans les déserts ? Quelles solutions techniques peuvent être mises en place pour pallier à l'accumulation de sable?</strong>
+                <p class="main-question">
+                    Comment optimiser le rendement des centrales photovoltaïques installées dans les déserts ? Quelles solutions techniques peuvent être mises en place pour pallier à l'accumulation de sable?
                 </p>
                 <p>
                     Notre projet consiste à utiliser un système d'irrigation afin de retirer les résidus sur la surface des modules photovoltaïques.
@@ -369,7 +611,7 @@
                 </div>
                 <div class="footer-contact">
                     <h4>Contact</h4>
-                    <p><i class="fas fa-envelope"></i> contact@sunwave.fr</p>
+                    <p><i class="fas fa-envelope"></i> contact@sun-wave.site</p>
                     <p><i class="fas fa-phone"></i> +33 (0)7 83 26 53 18</p>
                 </div>
             </div>
