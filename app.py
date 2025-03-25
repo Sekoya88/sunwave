@@ -40,7 +40,8 @@ def calculate():
                     'total': resultats['consommation_eau_annuelle'],
                     'pourcentage_recycle': 85,
                     'eau_recyclee': resultats['eau_recyclee'],
-                    'eau_perdue': resultats['eau_perdue']
+                    'eau_perdue': resultats['eau_perdue'],
+                    'nettoyages_par_an': resultats['nettoyages_par_an']
                 },
                 'impact_environmental': {
                     'tonnes_co2': resultats['reduction_co2'],

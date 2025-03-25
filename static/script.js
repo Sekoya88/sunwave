@@ -377,8 +377,16 @@ document.addEventListener('DOMContentLoaded', () => {
             document.querySelector('.water .result-value').textContent = 
                 `${Math.round(resultats.consommation_eau.total).toLocaleString()} L/an`;
             document.querySelector('.water .result-value').style.color = "#3498DB"; // Bleu
-            document.querySelector('.water ul li:first-child').textContent = 
-                `${resultats.consommation_eau.pourcentage_recycle}% d'eau recyclée`;
+            
+            // Mise à jour des détails de consommation d'eau
+            const waterDetails = document.querySelector('.water .result-detail ul');
+            if (waterDetails) {
+                waterDetails.innerHTML = `
+                    <li>${resultats.consommation_eau.pourcentage_recycle}% d'eau recyclée</li>
+                    <li>Économie: ${Math.round(resultats.consommation_eau.eau_recyclee).toLocaleString()} L/an</li>
+                    <li>Efficacité: 0.5L/m² par nettoyage</li>
+                `;
+            }
         }
 
         // Impact environnemental - Vert

@@ -70,10 +70,10 @@ class SolarCalculator:
         
         # Consommation totale annuelle
         conso_eau_annuelle = eau_par_cycle * nettoyages_par_an
-        # Eau recyclée (85% du total - les pertes)
+        # Eau recyclée (85% du total)
         eau_recyclee = conso_eau_annuelle * self.TAUX_RECYCLAGE
         # Eau perdue totale (15% pertes par cycle + 15% autres pertes)
-        eau_perdue = (eau_perdue_par_cycle * nettoyages_par_an) + (conso_eau_annuelle * 0.15)
+        eau_perdue = conso_eau_annuelle - eau_recyclee
         
         # Impact sur la durée de vie
         gain_kwh_vie = gain_kwh * self.DUREE_VIE

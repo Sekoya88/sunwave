@@ -1495,3 +1495,22 @@ button:focus, a:focus {
         background-position: 200% 0;
     }
 }
+
+.pipe {
+    position: absolute;
+    height: 4px;
+    background-color: #333;
+    transform-origin: left center;
+    pointer-events: none;
+}
+
+.pump-tank-pipe {
+    height: 6px;
+    background-color: #2196F3;
+    box-shadow: 0 0 4px rgba(33, 150, 243, 0.5);
+    z-index: 2;
+}
+
+.connection-indicator {
+    display: none; /* Cache les indicateurs de connexion car nous utilisons maintenant les tuyaux stylisés */
+}

@@ -176,7 +176,7 @@ class PriceConfigurator {
         this.updateAutomaticConnections();
         
         // Mettre à jour le prix
-        this.updatePrice();
+        this.updatePrices();
         
         this.checkAndCreateConnections();
         return sprinkler;
@@ -272,7 +272,7 @@ class PriceConfigurator {
         this.updateAutomaticConnections();
         
         // Mettre à jour le prix
-        this.updatePrice();
+        this.updatePrices();
     }
 
     calculatePumpRequirements() {
@@ -290,22 +290,57 @@ class PriceConfigurator {
     updatePrices() {
         const sprinklerCount = this.layout.sprinklers.length;
         const sensorCount = this.layout.sensors.length;
-        const pumpCount = this.layout.pumps.length || 1; // Au moins une pompe
-        const tankCount = this.layout.tanks.length || 1; // Au moins une cuve
+        const pumpCount = this.layout.pumps.length;
+        const tankCount = this.layout.tanks.length;
         
         const pipeLength = this.layout.pipes.reduce((total, pipe) => 
             total + pipe.length, 0) / 50; // Conversion en mètres
         
-        const sprinklerCost = sprinklerCount * 50;
-        const pipeCost = pipeLength * 15;
-        const sensorCost = sensorCount * 75;
-        const pumpCost = pumpCount * 1200;
-        const tankCost = tankCount * 2500;
+        // Ajustement des prix en fonction de la zone climatique
+        const climateZone = document.getElementById('climateZone').value;
+        const maintenanceFreq = document.getElementById('maintenanceFrequency').value;
         
+        // Facteurs de multiplication selon la zone climatique
+        let climateFactor = 1;
+        switch(climateZone) {
+            case 'desert':
+                climateFactor = 1.3; // +30% pour zone désertique
+                break;
+            case 'arid':
+                climateFactor = 1.2; // +20% pour zone aride
+                break;
+            case 'temperate':
+                climateFactor = 1; // Prix standard pour zone tempérée
+                break;
+        }
+        
+        // Facteurs de multiplication selon la fréquence d'entretien
+        let maintenanceFactor = 1;
+        switch(maintenanceFreq) {
+            case 'weekly':
+                maintenanceFactor = 1.2; // +20% pour entretien hebdomadaire
+                break;
+            case 'biweekly':
+                maintenanceFactor = 1.1; // +10% pour entretien bi-hebdomadaire
+                break;
+            case 'monthly':
+                maintenanceFactor = 1; // Prix standard pour entretien mensuel
+                break;
+        }
+        
+        // Application des facteurs aux coûts
+        const sprinklerCost = sprinklerCount * this.prices.sprinkler * climateFactor;
+        const pipeCost = pipeLength * this.prices.pipe * climateFactor;
+        const sensorCost = sensorCount * this.prices.sensor * climateFactor;
+        const pumpCost = pumpCount * this.prices.pump;
+        const tankCost = tankCount * this.prices.tank;
+        
+        // Calcul du coût total avec les facteurs
         const materialCost = sprinklerCost + pipeCost + sensorCost + pumpCost + tankCost;
-        const installationCost = materialCost * 0.40;
+        const installationCost = materialCost * this.prices.installation * maintenanceFactor;
         const totalCost = materialCost + installationCost;
         
+        // Mise à jour de l'affichage
         document.getElementById('sprinklerCount').textContent = sprinklerCount;
         document.getElementById('pipeLength').textContent = pipeLength.toFixed(1);
         document.getElementById('sensorCount').textContent = sensorCount;
@@ -335,42 +370,72 @@ class PriceConfigurator {
         const surface = parseFloat(document.getElementById('surface').value) || 100;
         const panelType = document.getElementById('panelType').value || 'standard';
         
-        // Calcul de la zone climatique
-        const climateZone = this.updateClimateZone();
+        // Récupérer la zone climatique et la fréquence d'entretien
+        const climateZone = document.getElementById('climateZone').value;
+        const maintenanceFreq = document.getElementById('maintenanceFrequency').value;
         
-        // Calcul des coûts
-        const sprinklerCost = sprinklers * 50;
-        const pipeCost = Math.round(pipeLength * 15);
-        const sensorCost = sensors * 75;
-        const pumpCost = pumps * 1200;
-        const tankCost = tanks * 2500;
+        // Facteurs de multiplication selon la zone climatique
+        let climateFactor = 1;
+        switch(climateZone) {
+            case 'desert':
+                climateFactor = 1.3;
+                break;
+            case 'arid':
+                climateFactor = 1.2;
+                break;
+            case 'temperate':
+                climateFactor = 1;
+                break;
+        }
+        
+        // Facteurs de multiplication selon la fréquence d'entretien
+        let maintenanceFactor = 1;
+        switch(maintenanceFreq) {
+            case 'weekly':
+                maintenanceFactor = 1.2;
+                break;
+            case 'biweekly':
+                maintenanceFactor = 1.1;
+                break;
+            case 'monthly':
+                maintenanceFactor = 1;
+                break;
+        }
+        
+        // Calcul des coûts avec les facteurs
+        const sprinklerCost = sprinklers * this.prices.sprinkler * climateFactor;
+        const pipeCost = Math.round(pipeLength * this.prices.pipe * climateFactor);
+        const sensorCost = sensors * this.prices.sensor * climateFactor;
+        const pumpCost = pumps * this.prices.pump;
+        const tankCost = tanks * this.prices.tank;
         
         // Coût total du matériel
         const totalMaterialCost = sprinklerCost + pipeCost + sensorCost + pumpCost + tankCost;
         
-        // Coût d'installation (40% du coût matériel)
-        const installationCost = Math.round(totalMaterialCost * 0.4);
+        // Coût d'installation avec facteur de maintenance
+        const installationCost = Math.round(totalMaterialCost * this.prices.installation * maintenanceFactor);
         
         // Coût total
         const totalCost = totalMaterialCost + installationCost;
         
-        // Calcul des économies annuelles (20% du coût total)
-        const yearlyGain = Math.round(totalCost * 0.2);
+        // Calcul des économies annuelles (ajusté selon la zone climatique)
+        const yearlyGain = Math.round(totalCost * 0.2 * climateFactor);
         
-        // Production optimisée (15%)
-        const optimizedProduction = 15;
+        // Production optimisée (ajustée selon la zone climatique)
+        const optimizedProduction = 15 * climateFactor;
         
         // Préparation des données pour le template
         return {
             surface,
             panelType,
             climateZone,
+            maintenanceFrequency: maintenanceFreq,
             sprinklers,
             sensors,
             pipeLength,
             pump_requirements: {
                 totalFlow: sprinklers * 2,
-                count: pumps > 0 ? pumps : 1,
+                count: pumps,
                 pressure: 3
             },
             tank_autonomy: 7,
@@ -384,7 +449,9 @@ class PriceConfigurator {
                 sensorCost,
                 pumpCost,
                 tankCost,
-                totalMaterialCost
+                totalMaterialCost,
+                climateFactor,
+                maintenanceFactor
             }
         };
     }
@@ -465,7 +532,7 @@ class PriceConfigurator {
         this.updateAutomaticConnections();
         
         // Mettre à jour le prix
-        this.updatePrice();
+        this.updatePrices();
         
         this.checkAndCreateConnections();
         return pump;
@@ -494,7 +561,7 @@ class PriceConfigurator {
         this.updateAutomaticConnections();
         
         // Mettre à jour le prix
-        this.updatePrice();
+        this.updatePrices();
         
         this.checkAndCreateConnections();
         return tank;
@@ -650,32 +717,8 @@ class PriceConfigurator {
         // Supprimer les indicateurs existants
         document.querySelectorAll('.connection-indicator').forEach(el => el.remove());
         
-        // Connexion pompe-cuve
-        if (this.layout.pumps.length > 0 && this.layout.tanks.length > 0) {
-            const pump = this.layout.pumps[0];
-            const tank = this.layout.tanks[0];
-            
-            // Créer un indicateur de connexion
-            const indicator = document.createElement('div');
-            indicator.className = 'connection-indicator';
-            
-            const length = Math.sqrt(
-                Math.pow(tank.x - pump.x, 2) + 
-                Math.pow(tank.y - pump.y, 2)
-            );
-            
-            const angle = Math.atan2(
-                tank.y - pump.y,
-                tank.x - pump.x
-            ) * 180 / Math.PI;
-            
-            indicator.style.width = `${length}px`;
-            indicator.style.transform = `rotate(${angle}deg)`;
-            indicator.style.left = `${pump.x}px`;
-            indicator.style.top = `${pump.y}px`;
-            
-            this.dragArea.appendChild(indicator);
-        }
+        // Ne pas créer d'indicateur de connexion pompe-cuve car nous avons déjà un tuyau
+        // La connexion est maintenant gérée uniquement par checkAndCreateConnections
     }
 
     updateElementPosition(element, x, y) {
@@ -1003,15 +1046,26 @@ class PriceConfigurator {
             if (registerConnection(element1, element2)) {
                 const center1 = this.getElementCenter(element1);
                 const center2 = this.getElementCenter(element2);
-                this.addPipe(center1, center2);
+                const pipe = this.addPipe(center1, center2);
+                
+                // Ajouter une classe spéciale pour le tuyau pompe-cuve
+                if ((element1.classList.contains('pump') && element2.classList.contains('tank')) ||
+                    (element1.classList.contains('tank') && element2.classList.contains('pump'))) {
+                    pipe.classList.add('pump-tank-pipe');
+                }
             }
         };
         
         // Rien à faire s'il n'y a pas d'éléments
         if (sprinklers.length === 0 && pumps.length === 0 && tanks.length === 0) return;
         
-        // Gérer le cas où il n'y a que des buses (les connecter en ligne)
-        if (sprinklers.length > 0 && pumps.length === 0 && tanks.length === 0) {
+        // Connecter d'abord la pompe à la cuve si les deux existent
+        if (pumps.length > 0 && tanks.length > 0) {
+            connectElements(pumps[0], tanks[0]);
+        }
+        
+        // Ensuite gérer les buses
+        if (sprinklers.length > 0) {
             // Trier les buses par position horizontale (de gauche à droite)
             const sortedSprinklers = [...sprinklers].sort((a, b) => {
                 return parseFloat(a.style.left) - parseFloat(b.style.left);
@@ -1021,77 +1075,44 @@ class PriceConfigurator {
             for (let i = 0; i < sortedSprinklers.length - 1; i++) {
                 connectElements(sortedSprinklers[i], sortedSprinklers[i + 1]);
             }
-            return;
-        }
-        
-        // Si nous avons des pompes et/ou des cuves
-        if (sprinklers.length > 1) {
-            // Connecter les buses entre elles (de gauche à droite)
-            const sortedSprinklers = [...sprinklers].sort((a, b) => {
-                return parseFloat(a.style.left) - parseFloat(b.style.left);
-            });
-            
-            for (let i = 0; i < sortedSprinklers.length - 1; i++) {
-                connectElements(sortedSprinklers[i], sortedSprinklers[i + 1]);
-            }
             
             // Connecter la dernière buse à la pompe ou à la cuve
             if (pumps.length > 0) {
                 connectElements(sortedSprinklers[sortedSprinklers.length - 1], pumps[0]);
-                
-                // Connecter la pompe à la cuve si elle existe
-                if (tanks.length > 0) {
-                    connectElements(pumps[0], tanks[0]);
-                }
             } else if (tanks.length > 0) {
                 connectElements(sortedSprinklers[sortedSprinklers.length - 1], tanks[0]);
             }
-        } else if (sprinklers.length === 1) {
-            // S'il n'y a qu'une seule buse
-            if (pumps.length > 0) {
-                connectElements(sprinklers[0], pumps[0]);
-                
-                // Connecter la pompe à la cuve si elle existe
-                if (tanks.length > 0) {
-                    connectElements(pumps[0], tanks[0]);
-                }
-            } else if (tanks.length > 0) {
-                connectElements(sprinklers[0], tanks[0]);
-            }
-        } else if (pumps.length > 0 && tanks.length > 0) {
-            // S'il n'y a pas de buses mais une pompe et une cuve
-            connectElements(pumps[0], tanks[0]);
         }
-        
-        // Mettre à jour les statuts des tuyaux
-        this.updateConnectionIndicators();
     }
 
     getElementCenter(element) {
-        // Pour différents types d'éléments, calculer le centre différemment
+        const left = parseFloat(element.style.left);
+        const top = parseFloat(element.style.top);
+
         if (element.classList.contains('sprinkler')) {
-            // Pour les buses, les pipes doivent être exactement positionnés au centre
-            const left = parseFloat(element.style.left);
-            const top = parseFloat(element.style.top);
+            // Pour les buses, connexion au centre exact
             return { x: left, y: top };
         } else if (element.classList.contains('pump')) {
-            // Centre de la pompe (30px = demi-largeur de 60px)
-            const left = parseFloat(element.style.left) + 30;
-            const top = parseFloat(element.style.top) + 30;
-            return { x: left, y: top };
+            // Pour la pompe, connexion sur le côté droit
+            return { 
+                x: left + 60, // largeur totale de la pompe
+                y: top + 30  // moitié de la hauteur
+            };
         } else if (element.classList.contains('tank')) {
-            // Centre du réservoir (40px = demi-largeur de 80px)
-            const left = parseFloat(element.style.left) + 40;
-            const top = parseFloat(element.style.top) + 50;
-            return { x: left, y: top };
+            // Pour la cuve, connexion sur le côté gauche
+            return { 
+                x: left, 
+                y: top + 40 // moitié de la hauteur
+            };
         } else if (element.classList.contains('sensor')) {
-            // Centre du capteur (15px = demi-largeur de 30px)
-            const left = parseFloat(element.style.left) + 15;
-            const top = parseFloat(element.style.top) + 15;
-            return { x: left, y: top };
+            // Pour les capteurs, connexion au centre
+            return { 
+                x: left + 15,
+                y: top + 15 
+            };
         }
         
-        // Fallback si le type n'est pas reconnu
+        // Fallback pour tout autre élément
         const rect = element.getBoundingClientRect();
         const dragAreaRect = this.dragArea.getBoundingClientRect();
         return {
